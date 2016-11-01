@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.sqisoft.remote.activity.MainActivity"
+    android:background="@drawable/appbackground3">
+
+     <RelativeLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:paddingRight="5dp"
+         android:paddingLeft="10dp"
+         android:paddingTop="15dp"
+         android:paddingBottom="15dp"
+         android:background="#FFFFFF"
+         android:id="@+id/title_layout">
+
+         <Button
+             android:layout_width="20dp"
+             android:layout_height="20dp"
+             android:background="@drawable/backarrowbtn"
+             android:id="@+id/top_back_btn"
+             android:layout_marginLeft="5dp"
+             android:layout_centerVertical="true"/>
+
+
+
+        <com.sqisoft.remote.view.TitleView
+            android:layout_centerVertical="true"
+            android:id="@+id/remotecamera_main_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="23dp"
+            android:textColor="#212121"
+            android:background="#FFFFFF"
+            android:layout_marginLeft="28dp"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/top_back_btn"
+            android:layout_toEndOf="@+id/top_back_btn" />
+
+         <Button
+             android:layout_width="30dp"
+             android:layout_height="28dp"
+             android:id="@+id/photo_gallery_Btn"
+             android:background="@drawable/person"
+             android:layout_alignParentTop="true"
+             android:layout_alignParentRight="true"
+             android:layout_alignParentEnd="true"
+             android:layout_marginRight="10dp"/>
+
+
+         <LinearLayout
+             android:visibility="gone"
+             android:id="@+id/image_delete_share_layout"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_alignBottom="@+id/remotecamera_main_title"
+             android:layout_alignParentRight="true"
+             android:layout_alignParentEnd="true">
+
+             <Button
+                 android:id="@+id/download_btn"
+                 android:layout_width="23dp"
+                 android:layout_height="23dp"
+                 android:background="@drawable/download"
+                 android:layout_alignParentTop="true"
+                 android:layout_marginRight="20dp"
+                 />
+
+         <Button
+             android:layout_centerVertical="true"
+             android:layout_marginRight="20dp"
+             android:layout_width="23dp"
+             android:layout_height="25dp"
+             android:background="@drawable/delete"
+             android:layout_alignParentTop="true"
+             android:layout_alignParentRight="true"
+             android:layout_alignParentEnd="true"
+             android:id="@+id/delete_btn" />
+
+         <Button
+             android:layout_centerVertical="true"
+             android:layout_marginRight="20dp"
+             android:layout_width="25dp"
+             android:layout_height="25dp"
+             android:background="@drawable/share"
+             android:layout_alignParentTop="true"
+             android:layout_toLeftOf="@+id/delete_btn"
+             android:layout_toStartOf="@+id/delete_btn"
+             android:id="@+id/share_btn" />
+
+
+         </LinearLayout>
+
+
+
+
+     </RelativeLayout>
+
+
+
+        <FrameLayout
+            android:id="@+id/replacedLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/title_layout">
+
+
+            <FrameLayout
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:id="@+id/navi_layout">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="셀피 메인"
+                    android:id="@+id/main_link_btn"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="MY 앨범"
+                    android:id="@+id/my_album_link_btn"
+                    android:layout_gravity="right|center_vertical" />
+
+            </FrameLayout>
+        </FrameLayout>
+
+
+
+
+
+
+</RelativeLayout>

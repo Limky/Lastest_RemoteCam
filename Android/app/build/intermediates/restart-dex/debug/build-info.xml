@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<instant-run
+    abi="armeabi-v7a,armeabi"
+    api-level="21"
+    density="xxhdpi"
+    format="7"
+    timestamp="3669761509662"
+    token="2784006490057295200" >
+
+    <task
+        name="javac"
+        duration="286" />
+    <task
+        name="instant-run-dex"
+        duration="0" />
+    <task
+        name="instant-run-transform"
+        duration="39" />
+    <task
+        name="verifier"
+        duration="2" />
+
+    <artifact
+        location="C:\RemoteCam\app\build\intermediates\transforms\dex\debug\folders\1000\5\slice_3\classes.dex"
+        type="DEX" />
+
+    <build timestamp="3532735390485" >
+        <artifact
+            location="C:\RemoteCam\app\build\outputs\apk\app-debug.apk"
+            type="MAIN" />
+    </build>
+    <build timestamp="3669761509662" >
+        <artifact
+            location="C:\RemoteCam\app\build\intermediates\transforms\dex\debug\folders\1000\5\slice_3\classes.dex"
+            type="DEX" />
+    </build>
+
+</instant-run>
