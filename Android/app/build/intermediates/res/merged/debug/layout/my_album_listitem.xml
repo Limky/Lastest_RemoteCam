@@ -48,19 +48,14 @@
                 android:layout_height="wrap_content"
                 android:text="2016.09.27"/>
 
-            <ToggleButton
+
+            <Switch
                 android:layout_marginRight="10dp"
                 android:layout_gravity="end"
                 android:layout_marginTop="40dp"
-                android:layout_width="65dp"
-                android:layout_height="35dp"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold"
-                android:textOn="공개"
-                android:textOff="비공개"
-                android:id="@+id/toggleButton"
-                android:layout_marginBottom="6dp"
-                android:background="@drawable/notavailabletime"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/switch_Btn" />
 
         </LinearLayout>
 

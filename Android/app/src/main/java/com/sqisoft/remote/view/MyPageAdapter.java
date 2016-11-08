@@ -6,9 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sqisoft.remote.R;
-import com.sqisoft.remote.domain.ServerImageObject;
-
-import java.util.ArrayList;
 
 import uk.co.senab.photoview.PhotoViewAttacher;
 
@@ -18,14 +15,15 @@ import uk.co.senab.photoview.PhotoViewAttacher;
 public class MyPageAdapter extends PagerAdapter{
 
     LayoutInflater inflater;
-    ArrayList<ServerImageObject> imagesList;
     PhotoViewAttacher mAttacher;
 
-    public MyPageAdapter(LayoutInflater inflater , ArrayList<ServerImageObject> imagesList) {
+
+    public MyPageAdapter(LayoutInflater inflater) {
         // TODO Auto-generated constructor stub
-        this.imagesList = imagesList;
+
         this.inflater=inflater;
     }
+
 
 
     //PagerAdapter가 가지고 잇는 View의 개수를 리턴
@@ -33,7 +31,7 @@ public class MyPageAdapter extends PagerAdapter{
     @Override
     public int getCount() {
         // TODO Auto-generated method stub
-        return imagesList.size(); //이미지 개수 리턴(그림이 10개라서 10을 리턴)
+       return 4; //이미지 개수 리턴(그림이 10개라서 10을 리턴)
     }
 
     //ViewPager가 현재 보여질 Item(View객체)를 생성할 필요가 있는 때 자동으로 호출

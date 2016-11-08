@@ -18,7 +18,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="원거리 셀프카메라 서비스"
+        android:text="@string/mainTopInformation"
         android:textStyle="bold"
         android:textSize="18dp"
         android:textColor="#000000"
@@ -31,7 +31,7 @@
         android:layout_marginTop="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="셀카봉 없이 셀프카메라를 촬영!!"
+        android:text="@string/mainLowInformation"
         android:textStyle="bold"
         android:textSize="13dp"
         android:textColor="#616161"

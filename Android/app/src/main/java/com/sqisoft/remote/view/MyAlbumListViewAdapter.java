@@ -1,8 +1,9 @@
 package com.sqisoft.remote.view;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
+import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -12,12 +13,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.sqisoft.remote.R;
-import com.sqisoft.remote.domain.ServerImageDomain;
+import com.sqisoft.remote.domain.ServerGalleryImageDomain;
 import com.sqisoft.remote.fragment.FragmentBase;
 import com.sqisoft.remote.fragment.FragmentMyAlbumImageDetail;
 import com.sqisoft.remote.manager.DataManager;
@@ -36,7 +37,7 @@ public class MyAlbumListViewAdapter extends BaseAdapter{
     LayoutInflater inflater;
     int indexNum = 0;
     // 문자열을 보관 할 ArrayList
-    private ArrayList<ServerImageDomain> serverImageDomains = DataManager.getInstance().getServerImageDomains();
+    private ArrayList<ServerGalleryImageDomain> serverGalleryImageDomains = DataManager.getInstance().getServerGalleryImageDomains();
     private Fragment adapterContext;
 
     // 생성자
@@ -54,12 +55,12 @@ public class MyAlbumListViewAdapter extends BaseAdapter{
 
     @Override
     public int getCount() {
-        return serverImageDomains.size();
+        return serverGalleryImageDomains.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return serverImageDomains.get(position);
+        return serverGalleryImageDomains.get(position);
     }
 
     @Override
@@ -67,6 +68,7 @@ public class MyAlbumListViewAdapter extends BaseAdapter{
         return position;
     }
 
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         final int pos = position;
@@ -79,10 +81,10 @@ public class MyAlbumListViewAdapter extends BaseAdapter{
         convertView = inflater.inflate(R.layout.my_album_listitem, parent, false);
 
         TextView selfieZone = (TextView) convertView.findViewById(R.id.my_album_selfie_zone);
-        selfieZone.setText(serverImageDomains.get(position).getImageTitle());
+        selfieZone.setText(serverGalleryImageDomains.get(position).getImageTitle());
 
         TextView imageTitle = (TextView) convertView.findViewById(R.id.my_album_image_date);
-        imageTitle.setText(serverImageDomains.get(position).getImageDate());
+        imageTitle.setText(serverGalleryImageDomains.get(position).getImageDate());
 
 
          ImageView myAlbumImageView = (ImageView) convertView.findViewById(R.id.my_album_image);
@@ -90,34 +92,33 @@ public class MyAlbumListViewAdapter extends BaseAdapter{
     //    Uri uri = Uri.fromFile(new File(serverImageDomains.get(position).getImageUrl()));
        // Log.i("getmImagePath","getmImagePath "+ serverImageDomains.get(position).getmImagePath());
         Picasso.with(context)
-                .load(serverImageDomains.get(position).getImageUrl())
+                .load(serverGalleryImageDomains.get(position).getImageUrl())
                 .placeholder(R.drawable.dx)
                 .resize(452,432)
                 .into(myAlbumImageView);
 
 
-        final ToggleButton toggleButton = (ToggleButton)convertView.findViewById(R.id.toggleButton);
-
-
-        if(serverImageDomains.get(position).getVisibility().equals("true")){
+        final Switch switch_Btn = (Switch) convertView.findViewById(R.id.switch_Btn);
+        if(serverGalleryImageDomains.get(position).getVisibility().equals("true")){
            // Toast.makeText(context, "토토 글글"+ "토클 getVisibility", Toast.LENGTH_SHORT).show();
-            toggleButton.setChecked(true);
-            toggleButton.setTextColor(Color.parseColor("#FFFFFF"));
-            toggleButton.setBackgroundResource(R.drawable.availabletime);
+            switch_Btn.setChecked(true);
+
         }
 
 
-        toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+
+        switch_Btn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 if (isChecked == true){
-                    toggleButton.setTextColor(Color.parseColor("#FFFFFF"));
-                    toggleButton.setBackgroundResource(R.drawable.availabletime);
+
 
                     Toast.makeText(context, "토토 글글"+ "토클 ON", Toast.LENGTH_SHORT).show();
-                    serverImageDomains.get(position).setVisibility("true");
-                    toggleButton.setChecked(true);
+                    serverGalleryImageDomains.get(position).setVisibility("true");
+                    switch_Btn.setChecked(true);
 
                     /**
                      * 서버에 공개 설정 요청 로직
@@ -129,12 +130,11 @@ public class MyAlbumListViewAdapter extends BaseAdapter{
 
                 } else {
 
-                    toggleButton.setTextColor(Color.parseColor("#BDBDBD"));
-                    toggleButton.setBackgroundResource(R.drawable.notavailabletime);
+
 
                     Toast.makeText(context, "토토 글글"+ "토클 OFF", Toast.LENGTH_SHORT).show();
-                    serverImageDomains.get(position).setVisibility("false");
-                    toggleButton.setChecked(false);
+                    serverGalleryImageDomains.get(position).setVisibility("false");
+                    switch_Btn.setChecked(false);
 
 
                     /**
@@ -199,7 +199,7 @@ public class MyAlbumListViewAdapter extends BaseAdapter{
                    FragmentTransaction transaction = fragmentManager.beginTransaction();
                     FragmentBase fragment = new FragmentMyAlbumImageDetail(pos);
                     FragmentUtil.addFragment(fragment);
-                    Toast.makeText(context, "리스트 클릭 : "+ serverImageDomains.get(pos).toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "리스트 클릭 : "+ serverGalleryImageDomains.get(pos).toString(), Toast.LENGTH_SHORT).show();
                 }
             });
 

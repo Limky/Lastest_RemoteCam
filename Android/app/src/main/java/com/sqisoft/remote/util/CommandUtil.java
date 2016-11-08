@@ -8,7 +8,7 @@ import com.google.gson.reflect.TypeToken;
 import com.sqisoft.remote.Demo;
 import com.sqisoft.remote.data.AbstractRequest;
 import com.sqisoft.remote.data.ResponseListener;
-import com.sqisoft.remote.domain.ServerImageDomain;
+import com.sqisoft.remote.domain.ServerGalleryImageDomain;
 
 import java.io.File;
 import java.util.HashMap;
@@ -17,10 +17,10 @@ public class CommandUtil {
 	//TODO : url 수정
 	public static final String URL_ZONE = "/remote/api/serverimage";
 
-	public static void getZone(final ResponseListener<ServerImageDomain[]> listener) {
+	public static void getZone(final ResponseListener<ServerGalleryImageDomain[]> listener) {
 		Log.d("test","getZone (2)");
 		String url = (Demo.MODE_TEST) ? "file:///android_asset/serverimage.json" : Demo.SERVER_URL + URL_ZONE + File.separator;
-		getArray(url, ServerImageDomain[].class, listener);
+		getArray(url, ServerGalleryImageDomain[].class, listener);
 	}
 
 

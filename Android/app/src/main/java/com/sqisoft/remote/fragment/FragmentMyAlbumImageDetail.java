@@ -18,14 +18,12 @@ import android.widget.TextView;
 import com.sqisoft.remote.R;
 import com.sqisoft.remote.activity.MainActivity;
 import com.sqisoft.remote.domain.LocalImageObject;
-import com.sqisoft.remote.domain.ServerImageDomain;
+import com.sqisoft.remote.domain.ServerGalleryImageDomain;
 import com.sqisoft.remote.manager.DataManager;
 import com.sqisoft.remote.view.MyAlbumDetailRecyclerAdapter;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-
-import uk.co.senab.photoview.PhotoViewAttacher;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,7 +55,7 @@ public class FragmentMyAlbumImageDetail extends FragmentBase {
 
   //  private Button share,download,delete;
 
-   ArrayList<ServerImageDomain> serverImageDomains = DataManager.getInstance().getServerImageDomains();
+   ArrayList<ServerGalleryImageDomain> serverGalleryImageDomains = DataManager.getInstance().getServerGalleryImageDomains();
 
 
 
@@ -75,6 +73,16 @@ public class FragmentMyAlbumImageDetail extends FragmentBase {
     @Override
     String getTitle() {
         return null;
+    }
+
+    @Override
+    void attachViews() {
+
+    }
+
+    @Override
+    void attachListener() {
+
     }
 
     /**
@@ -123,60 +131,13 @@ public class FragmentMyAlbumImageDetail extends FragmentBase {
         image_detail_recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),1, OrientationHelper.HORIZONTAL,false));
 
 
-     /*
-        Thread mThread = new Thread(){
-
-            @Override
-            public void run(){
-
-                try {
-                    URL url = new URL(serverImageDomains.get(currentIndex).getImageUrl());
-                    try {
-
-                        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                        conn.setDoInput(true);
-                        conn.connect();
-
-                        InputStream is = conn.getInputStream();
-                        bitmap = BitmapFactory.decodeStream(is);
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                }
-            }
-
-        };
-
-        mThread.start();
-        try {
-            mThread.join();
-            Bitmap resized = Bitmap.createScaledBitmap(bitmap,1920, 1080, true);
-            my_album_detail_image.setImageBitmap(resized);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }*/
-
-
-
-     /*   bitmap = DataManager.getInstance().getWebimage(serverImageDomains.get(currentIndex).getImageUrl());
-        my_album_detail_image.setImageBitmap(bitmap);
-*/
-
         Picasso.with(getActivity())
-                .load(serverImageDomains.get(currentIndex).getImageUrl())
+                .load(serverGalleryImageDomains.get(currentIndex).getImageUrl())
                 .placeholder(R.drawable.dx)
-                .resize(1420,580)
-                .into(my_album_detail_image);
+                .into(my_album_detail_image,DataManager.getInstance().getImageLoadedCallback(my_album_detail_image));
 
+        DataManager.getInstance().setCurrentCurrentImageURL(serverGalleryImageDomains.get(currentIndex).getImageUrl());
 
-        PhotoViewAttacher attacher = new PhotoViewAttacher(my_album_detail_image);
-        attacher.setScaleType(ImageView.ScaleType.FIT_XY);
-        attacher.update();
 
 
         return myAlbumImageDetailView;
@@ -220,51 +181,6 @@ public class FragmentMyAlbumImageDetail extends FragmentBase {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-/*
 
-    public class ImageAdapter extends BaseAdapter {
-
-        private Context ctx;
-        int imageBackground;
-
-        public ImageAdapter(Context c) {
-            ctx = c;
-            TypedArray ta = getContext().obtainStyledAttributes(R.styleable.Gallery1);
-            //    imageBackground = ta.getResourceId(R.styleable.Gallery1_android_galleryItemBackground, 1);
-            ta.recycle();
-        }
-
-
-
-        @Override
-        public int getCount() {
-
-            return pics.length;
-        }
-
-        @Override
-        public Object getItem(int arg0) {
-
-            return arg0;
-        }
-
-        @Override
-        public long getItemId(int arg0) {
-
-            return arg0;
-        }
-
-        @Override
-        public View getView(int arg0, View arg1, ViewGroup arg2) {
-            ImageView iv = new ImageView(ctx);
-            iv.setImageResource(pics[arg0]);
-            iv.setScaleType(ImageView.ScaleType.FIT_XY);
-            iv.setLayoutParams(new Gallery.LayoutParams(150,150));
-
-            //   iv.setBackgroundResource(imageBackground);
-            return iv;
-        }
-
-    }*/
 
 }

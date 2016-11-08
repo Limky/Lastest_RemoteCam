@@ -12,8 +12,7 @@ import android.widget.ImageView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.sqisoft.remote.R;
-import com.sqisoft.remote.domain.ServerImageDomain;
-import com.sqisoft.remote.domain.ServerImageObject;
+import com.sqisoft.remote.domain.ServerGalleryImageDomain;
 import com.sqisoft.remote.manager.DataManager;
 import com.squareup.picasso.Picasso;
 
@@ -25,9 +24,8 @@ import java.util.ArrayList;
 
 public class MyGalleryDetailRecyclerAdapter extends RecyclerView.Adapter{
 
-    private ArrayList<ServerImageDomain> serverImageDomains;
+    private ArrayList<ServerGalleryImageDomain> serverGalleryImageDomains;
     private Fragment adapterContext;
-    private ServerImageObject dataItem;
     private FragmentManager fragmentManager;
     private FragmentTransaction transaction;
     private Context context;
@@ -37,7 +35,7 @@ public class MyGalleryDetailRecyclerAdapter extends RecyclerView.Adapter{
     public MyGalleryDetailRecyclerAdapter(Fragment adapterContext, Context context, ImageView detail_image) {
 
         this.adapterContext = adapterContext;
-        this.serverImageDomains = DataManager.getInstance().getServerImageDomains();
+        this.serverGalleryImageDomains = DataManager.getInstance().getServerGalleryImageDomains();
         this.context = context;
         this.mDetail_image = detail_image;
     }
@@ -60,9 +58,8 @@ public class MyGalleryDetailRecyclerAdapter extends RecyclerView.Adapter{
             public void onClick(View v) {
 
                 Picasso.with(context)
-                        .load(serverImageDomains.get(position).getImageUrl())
-
-                        .into(mDetail_image);
+                        .load(serverGalleryImageDomains.get(position).getImageUrl())
+                        .into(mDetail_image,DataManager.getInstance().getImageLoadedCallback(mDetail_image));
 
 
             }
@@ -70,7 +67,7 @@ public class MyGalleryDetailRecyclerAdapter extends RecyclerView.Adapter{
 
 
         Picasso.with(context)
-                .load(serverImageDomains.get(position).getImageUrl())
+                .load(serverGalleryImageDomains.get(position).getImageUrl())
                 .placeholder(R.drawable.dx)
                 .resize(352,332)
                 .into(myViewHolder.mServer_imageview);
@@ -79,7 +76,7 @@ public class MyGalleryDetailRecyclerAdapter extends RecyclerView.Adapter{
     @Override
     public int getItemCount() {
 
-        return serverImageDomains.size();
+        return serverGalleryImageDomains.size();
     }
 
     /** This is our ViewHolder class */

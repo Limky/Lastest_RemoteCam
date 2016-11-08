@@ -14,10 +14,9 @@ import android.widget.TextView;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.sqisoft.remote.R;
-import com.sqisoft.remote.domain.ServerImageDomain;
-import com.sqisoft.remote.domain.ServerImageObject;
+import com.sqisoft.remote.domain.ServerGalleryImageDomain;
 import com.sqisoft.remote.fragment.FragmentBase;
-import com.sqisoft.remote.fragment.FragmentImageDetail;
+import com.sqisoft.remote.fragment.FragmentGalleryDetail;
 import com.sqisoft.remote.manager.DataManager;
 import com.sqisoft.remote.util.FragmentUtil;
 import com.squareup.picasso.Picasso;
@@ -30,9 +29,8 @@ import java.util.ArrayList;
 
 public class MyRecyclerAdapter extends RecyclerView.Adapter{
 
-    private ArrayList<ServerImageDomain> serverImageDomains;
+    private ArrayList<ServerGalleryImageDomain> serverGalleryImageDomains;
     private Fragment adapterContext;
-    private ServerImageObject dataItem;
     private FragmentManager fragmentManager;
     private  FragmentTransaction transaction;
     private  Context context;
@@ -41,7 +39,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter{
     public MyRecyclerAdapter(Fragment adapterContext, Context context) {
 
         this.adapterContext = adapterContext;
-        this.serverImageDomains = DataManager.getInstance().getServerImageDomains();
+        this.serverGalleryImageDomains = DataManager.getInstance().getServerGalleryImageDomains();
         this.context = context;
     }
 
@@ -64,17 +62,17 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter{
             public void onClick(View v) {
                 fragmentManager = adapterContext.getFragmentManager();
                 transaction = fragmentManager.beginTransaction();
-                FragmentBase fragment = new FragmentImageDetail(position);
+                FragmentBase fragment = new FragmentGalleryDetail(position);
                 FragmentUtil.addFragment(fragment);
 
             }
         });
 
 
-        myViewHolder.mImageTttleTextView.setText(serverImageDomains.get(position).getImageTitle());
+        myViewHolder.mImageTttleTextView.setText(serverGalleryImageDomains.get(position).getImageTitle());
 
         Picasso.with(context)
-                .load(serverImageDomains.get(position).getImageUrl())
+                .load(serverGalleryImageDomains.get(position).getImageUrl())
                 .placeholder(R.drawable.dx)
                 .resize(452,432)
                 .into(myViewHolder.mServer_imageview);
@@ -83,7 +81,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter{
     @Override
     public int getItemCount() {
 
-        return serverImageDomains.size();
+        return serverGalleryImageDomains.size();
     }
 
     /** This is our ViewHolder class */

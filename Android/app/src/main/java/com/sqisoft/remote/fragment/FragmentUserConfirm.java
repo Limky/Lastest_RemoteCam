@@ -12,12 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.sqisoft.remote.R;
 import com.sqisoft.remote.activity.MainActivity;
 import com.sqisoft.remote.manager.DataManager;
-import com.sqisoft.remote.util.Log;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -84,7 +82,6 @@ public class FragmentUserConfirm extends FragmentBase {
         // Inflate the layout for this fragment
         fragment_fragment_user_confirm = inflater.inflate(R.layout.fragment_fragment_user_confirm, container, false);
 
-        catching_img = (ImageView) fragment_fragment_user_confirm.findViewById(R.id.catching_img);
         setTitle("저장 완료");
         MainActivity.setTopBackButton(true);
         setGalleryButton(true);
@@ -93,11 +90,13 @@ public class FragmentUserConfirm extends FragmentBase {
         manager = getFragmentManager();
         transaction = manager.beginTransaction();
 
-        cancel_remote_btn = (Button) fragment_fragment_user_confirm.findViewById(R.id.cancel_remote_btn);
+        attachViews();
+
+
         cancel_remote_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /**원격서버로 이미지 저장을 취소하는 로직..
+                /**원격서버로 저장된 이미지를 외부로 공개하지는 않는다...
                  ..
                  ..
                  ..
@@ -108,12 +107,11 @@ public class FragmentUserConfirm extends FragmentBase {
         });
 
 
-        save_remote_image_btn = (Button) fragment_fragment_user_confirm.findViewById(R.id.save_remote_image_btn);
         save_remote_image_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                /**원격서버로 이미지를 저장하는 로직...
+                /**원격서버로 이미지를 외부로 공개한다...
                  ..
                  ..
                  ..
@@ -122,7 +120,6 @@ public class FragmentUserConfirm extends FragmentBase {
 
             }
         });
-
 
 
 
@@ -132,15 +129,17 @@ public class FragmentUserConfirm extends FragmentBase {
 
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                Log.i("tag", "keyCode: " + keyCode);
+          //      Log.i("tag", "keyCode: " + keyCode);
                 if( keyCode == KeyEvent.KEYCODE_BACK ) {
-                    Toast.makeText(getActivity(),"백버튼 인터셉터",Toast.LENGTH_LONG).show();
-                    Log.i("tag", "onKey Back listener is working!!!");
+
+                    /**원격서버로 저장된 이미지를 외부로 공개하지는 않는다...
+                     ..
+                     ..
+                     ..
+                     **/
+
 
                     transaction.replace(R.id.replacedLayout, new FragmentMain(),"FMain").commit();
-                    // setTitle("셀카 촬영");
-
-                    //    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
                     return true;
                 } else {
@@ -156,6 +155,23 @@ public class FragmentUserConfirm extends FragmentBase {
 
         return fragment_fragment_user_confirm;
     }
+
+
+
+    @Override
+    void attachViews() {
+        catching_img = (ImageView) fragment_fragment_user_confirm.findViewById(R.id.catching_img);
+        cancel_remote_btn = (Button) fragment_fragment_user_confirm.findViewById(R.id.cancel_remote_btn);
+        save_remote_image_btn = (Button) fragment_fragment_user_confirm.findViewById(R.id.open_remote_image_btn);
+    }
+
+    @Override
+    void attachListener() {
+
+    }
+
+
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -187,6 +203,8 @@ public class FragmentUserConfirm extends FragmentBase {
     String getTitle() {
         return "저장완료";
     }
+
+
 
     /**
      * This interface must be implemented by activities that contain this

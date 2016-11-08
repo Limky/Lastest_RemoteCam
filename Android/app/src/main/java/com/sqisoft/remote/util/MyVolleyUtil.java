@@ -10,7 +10,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sqisoft.remote.Demo;
-import com.sqisoft.remote.domain.ServerImageDomain;
+import com.sqisoft.remote.domain.ServerGalleryImageDomain;
 
 import org.json.JSONObject;
 
@@ -45,7 +45,7 @@ public class MyVolleyUtil {
             public void onResponse(JSONObject response) {
 
                 Gson gson = new GsonBuilder().create();
-                ServerImageDomain[] data = gson.fromJson(response.toString(),ServerImageDomain[].class);
+                ServerGalleryImageDomain[] data = gson.fromJson(response.toString(),ServerGalleryImageDomain[].class);
                 Log.i("data[0]","data[0] = "+data[0].toString());
             }
         }, new Response.ErrorListener() {

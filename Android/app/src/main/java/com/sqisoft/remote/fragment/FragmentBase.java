@@ -23,6 +23,8 @@ public abstract class FragmentBase extends Fragment{
     }
 
     abstract String getTitle();
+    abstract void attachViews();
+    abstract void attachListener();
 
     public void setTitle(String title) {
 

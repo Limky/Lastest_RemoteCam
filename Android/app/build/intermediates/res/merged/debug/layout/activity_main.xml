@@ -118,13 +118,13 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="셀피 메인"
+                    android:text="@string/mainBtn"
                     android:id="@+id/main_link_btn"/>
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="MY 앨범"
+                    android:text="@string/myAlbumBtn"
                     android:id="@+id/my_album_link_btn"
                     android:layout_gravity="right|center_vertical" />
 

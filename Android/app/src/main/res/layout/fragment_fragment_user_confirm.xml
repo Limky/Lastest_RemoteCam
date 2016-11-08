@@ -28,7 +28,7 @@
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:padding="5dp"
-         android:text="오죽헌 입구"
+         android:text="오죽헌 테스트 입구"
          android:textStyle="bold"
          android:textSize="17sp"
          android:textColor="#000000"/>
@@ -58,7 +58,7 @@
              android:layout_width="0dp"
              android:layout_weight="1"
              android:layout_height="wrap_content"
-             android:text="취소"
+             android:text="@string/imageOpenCancel"
              android:id="@+id/cancel_remote_btn"
              android:background="@drawable/user_confirm_left_button"
              android:textColor="#ea3986"
@@ -69,8 +69,8 @@
              android:layout_width="0dp"
              android:layout_weight="1"
              android:layout_height="wrap_content"
-             android:text="공개하기"
-             android:id="@+id/save_remote_image_btn"
+             android:text="@string/imageOpen"
+             android:id="@+id/open_remote_image_btn"
              android:background="@drawable/user_confirm_right_button"
              android:textColor="#ea3986"
              android:textSize="18dp"/>

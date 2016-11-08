@@ -1,24 +1,23 @@
 package com.sqisoft.remote.fragment;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.sqisoft.remote.R;
 import com.sqisoft.remote.activity.MainActivity;
-import com.sqisoft.remote.domain.SelfieZoneObject;
+import com.sqisoft.remote.data.ResponseListener;
+import com.sqisoft.remote.domain.SelfieZoneDomain;
+import com.sqisoft.remote.manager.DataManager;
 import com.sqisoft.remote.util.FragmentUtil;
+import com.sqisoft.remote.util.Log;
+import com.sqisoft.remote.util.SelfieZoneUtil;
 import com.sqisoft.remote.view.MyMainListViewAdapter;
 
 import java.util.ArrayList;
@@ -41,15 +40,10 @@ public class FragmentMain extends FragmentBase {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    private Button mCamera_btn;
     private OnFragmentInteractionListener mListener;
 
     View fragment_main_view;
-
-    FragmentManager manager;
-    FragmentTransaction transaction;
-    ImageView tourImageView;
-
     MyMainListViewAdapter myMainListViewAdapter;
     private ListView m_ListView;
 
@@ -86,7 +80,7 @@ public class FragmentMain extends FragmentBase {
 
     @Override
     public void onResume(){
-        Toast.makeText(getActivity(), "Resume "+ "Main 스타트", Toast.LENGTH_SHORT).show();
+    //    Toast.makeText(getActivity(), "Resume "+ "Main 스타트", Toast.LENGTH_SHORT).show();
 
         super.onResume();
     }
@@ -101,33 +95,17 @@ public class FragmentMain extends FragmentBase {
         // Inflate the layout for this fragment
         fragment_main_view = inflater.inflate(R.layout.fragment_main, container, false);
 
-      //  tourImageView = (ImageView)  fragment_main_view.findViewById(R.id.tour_imageview);
-        m_ListView = (ListView) fragment_main_view.findViewById(R.id.list);
-        //투어 이미지 설정
-       // tourImageView.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.main_tour_img_2));
 
-        //프래그먼트 페이지 이동을 위한 초기 설정
-       /*  manager = getFragmentManager();
-         transaction = manager.beginTransaction();*/
+        attachViews();
 
-        Button cameraBtn = (Button)fragment_main_view.findViewById(R.id.camera_btn);
-        cameraBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentUtil.addFragment(new FragmentCamera());
-            //    transaction.replace(R.id.replacedLayout, new FragmentCamera(),"FCamera").addToBackStack(null).commit();
+        attachListener();
 
-            }
-        });
+        LoadServerSelfieZoneDate();
 
 
-        ArrayList<SelfieZoneObject> selfieZoneObjects = new ArrayList<>();
-        selfieZoneObjects.add(new SelfieZoneObject("오죽헌 입구","강원도 강릉시 죽헌동(竹軒洞)에 있는 조선 중기의 목조건물.", BitmapFactory.decodeResource(getResources(),R.drawable.tour_img_1)));
-        selfieZoneObjects.add(new SelfieZoneObject("오죽헌 안채","1963년 1월 21일 보물 제165호로 지정되었다. 정면 3칸, 측면 2칸의 단층 팔작지붕 양식이다.", BitmapFactory.decodeResource(getResources(),R.drawable.tour_img_2)));
-        selfieZoneObjects.add(new SelfieZoneObject("오죽헌 전경","지녀 주심포집에서 익공집으로의 변천과정을 보여주는 중요한 구조이다.", BitmapFactory.decodeResource(getResources(),R.drawable.tour_img_3)));
+        myMainListViewAdapter = new MyMainListViewAdapter(getActivity(), DataManager.getInstance().getSelfieZoneDomains());
 
-        myMainListViewAdapter = new MyMainListViewAdapter(getActivity(), selfieZoneObjects);
-
+        //메인 리스트 헤더 푸터 설정
         View header = inflater.inflate(R.layout.listview_main_header,null,false);
         View footer = inflater.inflate(R.layout.listview_main_footer,null,false);
         m_ListView.addHeaderView(header);
@@ -136,12 +114,41 @@ public class FragmentMain extends FragmentBase {
 
 
 
-    //   MyVolleyUtil.getInstance().sendRequest();
-
-
         return fragment_main_view;
 
     }
+
+
+    private void LoadServerSelfieZoneDate(){
+
+        SelfieZoneUtil.getZone(new ResponseListener<SelfieZoneDomain[]>() {
+
+            @Override
+            public void response(boolean success, SelfieZoneDomain[] data) {
+                Log.d("test","메인 안에 response (1)");
+                if(success && data != null) {
+                    Log.d("test","response  피니시(11)");
+                    ArrayList<SelfieZoneDomain> selfieZoneDomains = new ArrayList<SelfieZoneDomain>();
+                    for (int i = 0; i < data.length; i++) {
+                        selfieZoneDomains.add(data[i]);
+                        DataManager.getInstance().setSelfieZoneDomains(selfieZoneDomains);
+
+                    }
+                }
+            }
+        });
+
+    }
+
+    private Button.OnClickListener CameraFragmentMoveListener = new Button.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            FragmentUtil.addFragment(new FragmentCamera());
+            //    transaction.replace(R.id.replacedLayout, new FragmentCamera(),"FCamera").addToBackStack(null).commit();
+        }
+    };
+
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -173,6 +180,18 @@ public class FragmentMain extends FragmentBase {
     @Override
     String getTitle() {
         return "셀카촬영";
+    }
+
+
+    @Override
+    void attachViews() {
+        m_ListView = (ListView) fragment_main_view.findViewById(R.id.list);
+        mCamera_btn = (Button)fragment_main_view.findViewById(R.id.camera_btn);
+    }
+
+    @Override
+    void attachListener() {
+        mCamera_btn.setOnClickListener(CameraFragmentMoveListener);
     }
 
     public interface OnFragmentInteractionListener {

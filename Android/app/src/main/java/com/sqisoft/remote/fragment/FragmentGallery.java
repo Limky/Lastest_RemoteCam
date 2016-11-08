@@ -4,13 +4,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,8 +21,6 @@ import android.widget.Toast;
 import com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader;
 import com.sqisoft.remote.R;
 import com.sqisoft.remote.activity.MainActivity;
-import com.sqisoft.remote.domain.ServerImageObject;
-import com.sqisoft.remote.manager.DataManager;
 import com.sqisoft.remote.view.MyRecyclerAdapter;
 
 import java.util.ArrayList;
@@ -48,12 +44,12 @@ public class FragmentGallery extends  FragmentBase {
     private String mParam1;
     private String mParam2;
     private Context mContext;
+    private RecyclerView recyclerView;
     FragmentManager manager;
     FragmentTransaction transaction;
 
 
     ArrayList<String> thumbsDatas = new ArrayList<String>();
-    ArrayList<ServerImageObject> serverImageObjects = new ArrayList<ServerImageObject>();
     Cursor imageCursor;
 
     private OnFragmentInteractionListener mListener;
@@ -67,6 +63,7 @@ public class FragmentGallery extends  FragmentBase {
     String getTitle() {
         return "셀카 갤러리";
     }
+
 
     public FragmentGallery() {
         // Required empty public constructor
@@ -108,26 +105,17 @@ public class FragmentGallery extends  FragmentBase {
 
         albumView = inflater.inflate(R.layout.fragment_gallery, container, false);
 
-        RecyclerView recyclerView = (RecyclerView) albumView.findViewById(R.id.recycler_view);
 
         setTitle("셀카 갤러리");
         setGalleryButton(true);
         MainActivity.setTopBackButton(true);
 
-        getThumbInfo();
+        attachViews();
 
-        DataManager.getInstance().setServerImageObjects(serverImageObjects);
         MyRecyclerAdapter myAdapter = new MyRecyclerAdapter(this,getActivity());
         recyclerView.setAdapter(myAdapter);
 
         recyclerView.setLayoutManager(new GridLayoutManager(mContext, 3));
-      //  recyclerView.setLayoutManager(new GridLayoutManager(mContext, 3, GridLayoutManager.HORIZONTAL,false));
-
-        spinner = (Spinner) albumView.findViewById(R.id.spin);
-        
-    /*    adapter = ArrayAdapter.createFromResource(getActivity(),R.array.country_names,android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        spinner.setAdapter(adapter);*/
 
 
 
@@ -160,6 +148,16 @@ public class FragmentGallery extends  FragmentBase {
     }
 
 
+    @Override
+    void attachViews() {
+         recyclerView = (RecyclerView) albumView.findViewById(R.id.recycler_view);
+         spinner = (Spinner) albumView.findViewById(R.id.spin);
+    }
+
+    @Override
+    void attachListener() {
+
+    }
 
     @Override
     public void onResume(){
@@ -209,7 +207,7 @@ public class FragmentGallery extends  FragmentBase {
         void onFragmentInteraction(Uri uri);
     }
 
-
+/*
     private void getThumbInfo(){
 
         String[] proj = new String[]{MediaStore.Images.Media._ID,
@@ -248,13 +246,12 @@ public class FragmentGallery extends  FragmentBase {
                 num++;
                 if (thumbsImageID != null && thumbsImageID.startsWith("/storage/emulated/0/DCIM/HIKVISION")){
                     Log.d("test","img is " + title);
-                    serverImageObjects.add(new ServerImageObject(thumbsData,title));
                 }
             }while (imageCursor.moveToNext());
         }
         imageCursor.close();
         return;
-    }
+    }*/
 
 
 }

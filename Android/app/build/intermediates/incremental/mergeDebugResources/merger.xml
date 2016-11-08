@@ -1402,13 +1402,12 @@
         <attr format="boolean" name="textStroke"/>
         <attr format="float" name="textStrokeWidth"/>
         <attr format="color" name="textStrokeColor"/>
-    </declare-styleable></file><file path="C:\RemoteCam\app\src\main\res\values\dimens.xml" qualifiers=""><dimen name="activity_vertical_margin">16dp</dimen><dimen name="activity_horizontal_margin">16dp</dimen></file><file path="C:\RemoteCam\app\src\main\res\values\strings.xml" qualifiers=""><string name="hello">Hello World, DemoActivity!</string><string name="hello_blank_fragment">Hello blank fragment</string><string name="app_name">RemoteCam</string><string-array name="country_names">
-        <item>앨범 전체</item>
-        <item>Pakistan</item>
-        <item>China</item>
-        <item>Singapore</item>
-        <item>Nepal</item>
-    </string-array></file><file path="C:\RemoteCam\app\src\main\res\values\styles.xml" qualifiers=""><style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+    </declare-styleable></file><file path="C:\RemoteCam\app\src\main\res\values\dimens.xml" qualifiers=""><dimen name="activity_vertical_margin">16dp</dimen><dimen name="activity_horizontal_margin">16dp</dimen></file><file path="C:\RemoteCam\app\src\main\res\values\strings.xml" qualifiers=""><string name="galleryAlbumDetail">셀카갤러리 보기</string><string-array name="imageFilter">
+        <item>최신순</item>
+        <item>추천순</item>
+        <item>항목3</item>
+        <item>항목4</item>
+    </string-array><string name="myAlbum">MY앨범</string><string name="limitInformation">30초 안에 촬영해 주세요</string><string name="mainLowInformation">셀카봉 없이 셀프카메라를 촬영!!</string><string name="imageOpenCancel">취소</string><string name="privateText">비공개</string><string name="imageSaved">저장완료</string><string name="mainTitle">셀카촬영</string><string name="captureImageSave">저장하기</string><string name="cameraStart">촬영시작</string><string name="myAlbumBtn">MY 앨범 버튼</string><string name="captureCompleted">촬영완료</string><string name="hello">Hello World, DemoActivity!</string><string name="myAlbumDetail">MY앨범보기</string><string name="liveViewTitle">촬영준비</string><string name="app_name">RemoteCam</string><string name="imageOpen">공개하기</string><string name="waitingMain">대기 중</string><string name="selfieIndex">셀피존</string><string name="publicText">공개</string><string name="capturingTitle">촬영 중</string><string name="galleryAlbum">다운로드 앨범</string><string name="hello_blank_fragment">Hello blank fragment</string><string name="mainTopInformation">원거리 셀프카메라 서비스</string><string name="waitingUnit">초</string><string name="mainBtn">메인 버튼</string><string name="cameraWaitng">대기시간</string></file><file path="C:\RemoteCam\app\src\main\res\values\styles.xml" qualifiers=""><style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
 
         <item name="android:background">@color/cardview_light_background</item>

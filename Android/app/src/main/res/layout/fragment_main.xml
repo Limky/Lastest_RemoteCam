@@ -4,17 +4,6 @@
     android:layout_height="match_parent"
     tools:context="com.sqisoft.remote.fragment.FragmentMain">
 
-<!--
-
-    <Button
-        android:layout_width="130dp"
-        android:layout_height="40dp"
-        android:textColor="#FFFFFF"
-        android:text="MY셀카앨범"
-        android:background="@drawable/availabletime"
-        android:id="@+id/photo_galleryBtn"
-        />
--->
 
 
 
@@ -42,7 +31,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="촬영 시작"
+            android:text="@string/cameraStart"
             android:id="@+id/camera_btn"
             android:background="#ea3986"
             android:textColor="#FFFFFF"

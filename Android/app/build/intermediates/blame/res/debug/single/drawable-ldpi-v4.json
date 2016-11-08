@@ -32,12 +32,12 @@
         "source": "C:\\RemoteCam\\app\\src\\main\\res\\drawable-ldpi\\antartica4.PNG"
     },
     {
-        "merged": "C:\\RemoteCam\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi-v4\\antartica1.PNG",
-        "source": "C:\\RemoteCam\\app\\src\\main\\res\\drawable-ldpi\\antartica1.PNG"
-    },
-    {
         "merged": "C:\\RemoteCam\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi-v4\\antartica3.PNG",
         "source": "C:\\RemoteCam\\app\\src\\main\\res\\drawable-ldpi\\antartica3.PNG"
+    },
+    {
+        "merged": "C:\\RemoteCam\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi-v4\\antartica1.PNG",
+        "source": "C:\\RemoteCam\\app\\src\\main\\res\\drawable-ldpi\\antartica1.PNG"
     },
     {
         "merged": "C:\\RemoteCam\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi-v4\\antartica9.PNG",

@@ -1,7 +1,6 @@
 package com.sqisoft.remote.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -9,7 +8,6 @@ import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
@@ -48,9 +46,6 @@ import com.sqisoft.remote.view.PlaySurfaceView;
 import org.MediaPlayer.PlayM4.Player;
 
 import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -221,17 +216,17 @@ public class FragmentCamera extends FragmentBase implements SurfaceHolder.Callba
     // GUI init
     private boolean initFragment()
     {
-        findViews();
+        attachViews();
         m_osurfaceView.getHolder().addCallback(this);
-        setListeners();
+        attachListener();
         return true;
     }
 
     //뷰 xml 달아주기.
-    private void findViews()
-    {
+    @Override
+    void attachViews() {
+
         m_osurfaceView = (SurfaceView)fragment_camera_view.findViewById(R.id.sur_player);
-        cancelBtn = (Button)fragment_camera_view.findViewById(R.id.cancel_btn);
         saveImageBtn = (Button)fragment_camera_view.findViewById(R.id.save_image_btn);
         cameraActionBtn = (Button) fragment_camera_view.findViewById(R.id.camera_action_btn);
         //  userSelectLayout = (RelativeLayout) fragment_camera_view.findViewById(R.id.user_select_layout);
@@ -251,10 +246,10 @@ public class FragmentCamera extends FragmentBase implements SurfaceHolder.Callba
     }
 
     //버튼 이벤트 달아주기.
-    private void setListeners()
+    @Override
+     void attachListener()
     {
         cameraActionBtn.setOnClickListener(Capture_Listener);
-        cancelBtn.setOnClickListener(Cancel_Listener);
         saveImageBtn.setOnClickListener(Saveimage_Listener);
     }
 
@@ -625,8 +620,6 @@ public class FragmentCamera extends FragmentBase implements SurfaceHolder.Callba
     }
 
 
-
-
     //네트워크 카메라 웹 뷰에서 이미지를 가져온다.
     public class WebGetImage extends AsyncTask<Void, Void, Void> {
 
@@ -676,13 +669,13 @@ public class FragmentCamera extends FragmentBase implements SurfaceHolder.Callba
             mAttacher = new PhotoViewAttacher(captureImageView);
             captureImageView.invalidate();
 
-//            imageTitleTextView.setText(image_title);
+
         }
 
 
     }
 
-
+/*
     //라이브 뷰를 다시 재시작한다.
     private void restartLiveView(){
 
@@ -693,14 +686,8 @@ public class FragmentCamera extends FragmentBase implements SurfaceHolder.Callba
 
         startPreview();
 
-    }
+    }*/
 
-    //취소버튼이벤트
-    private Button.OnClickListener Cancel_Listener = new Button.OnClickListener() {
-        public void onClick(View v) {
-            //     restartLiveView();
-        }
-    };
 
     //이미지를 저장한다. (현재 로컬)
     private Button.OnClickListener Saveimage_Listener = new Button.OnClickListener() {
@@ -711,60 +698,18 @@ public class FragmentCamera extends FragmentBase implements SurfaceHolder.Callba
             DataManager dataManager = DataManager.getInstance();
             dataManager.setBitmap(bit);
 
+            /*
+            *
+            * 서버로 부터 이미지를 저장하기를 요청한다.
+            *
+            * */
+
             transaction.replace(R.id.replacedLayout, new FragmentUserConfirm(),"FUser").commit();
-
-
-            //파일 이름 :날짜_시간
-            Date day = new Date();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.KOREA);
-            fileName = String.valueOf(sdf.format(day));
-            fileName +=".jpg";
-
-
-            File filepath = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM) + "/HIKVISION");
-            Log.d("filepath==", filepath.toString()+" "+filepath.exists());
-            if (!filepath.exists()) {
-                boolean ret = filepath.mkdirs();
-                Log.d("mkdirs action success!!", "ret:"+ret);
-            }
-
-            File filespace = new File(new File("/storage/emulated/0/DCIM/HIKVISION"), fileName);
-            if (filespace.exists()) {
-                filespace.delete();
-            }
-
-            try {
-
-                FileOutputStream file = new FileOutputStream(filespace);
-                bit.compress(Bitmap.CompressFormat.JPEG,100,file);
-
-                file.flush();
-                file.close();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            galleryAddPic();
-
-            //다시 레이아웃을 처음으로 돌린다.
-            //    restartLiveView();
 
         }
 
     };
 
-
-    //기본갤러리에서 저장 및 refresh
-    private void galleryAddPic() {
-
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        File f = new File("/storage/emulated/0/DCIM/HIKVISION/"+fileName);
-        Uri contentUri = Uri.fromFile(f);
-        mediaScanIntent.setData(contentUri);
-        getActivity().sendBroadcast(mediaScanIntent);
-
-    }
 
     //프리뷰에서 캡춰되 이미지로 변환
     private void changeImageviewLayout(boolean b){

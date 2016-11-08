@@ -14,14 +14,11 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.sqisoft.remote.R;
-import com.sqisoft.remote.domain.ServerImageDomain;
-import com.sqisoft.remote.domain.ServerImageObject;
+import com.sqisoft.remote.domain.ServerGalleryImageDomain;
 import com.sqisoft.remote.manager.DataManager;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-
-import uk.co.senab.photoview.PhotoViewAttacher;
 
 /**
  * Created by SQISOFT on 2016-10-07.
@@ -29,22 +26,21 @@ import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class MyAlbumDetailRecyclerAdapter extends RecyclerView.Adapter{
 
-    private ArrayList<ServerImageDomain> serverImageDomains;
+    private ArrayList<ServerGalleryImageDomain> serverGalleryImageDomains;
     private Fragment adapterContext;
-    private ServerImageObject dataItem;
     private FragmentManager fragmentManager;
     private FragmentTransaction transaction;
     private Context context;
     private ImageLoader mImageLoader;
     private ImageView mDetail_image;
-    private Bitmap bitmap;
+    private Bitmap bitmap,bit;
     private TextView mCategoryTextView;
 
     // Adapter constructor
     public MyAlbumDetailRecyclerAdapter(Fragment adapterContext, Context context, ImageView detail_image ,TextView category_text) {
 
         this.adapterContext = adapterContext;
-        this.serverImageDomains = DataManager.getInstance().getServerImageDomains();
+        this.serverGalleryImageDomains = DataManager.getInstance().getServerGalleryImageDomains();
         this.context = context;
         this.mDetail_image = detail_image;
         this.mCategoryTextView = category_text;
@@ -62,36 +58,31 @@ public class MyAlbumDetailRecyclerAdapter extends RecyclerView.Adapter{
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int position) {
 
+
+
         final MyViewHolder myViewHolder = (MyViewHolder) viewHolder;
         myViewHolder.mServer_imageview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+
                Picasso.with(context)
-                        .load(serverImageDomains.get(position).getImageUrl())
-                        .into(mDetail_image);
+                        .load(serverGalleryImageDomains.get(position).getImageUrl())
+                        .into(mDetail_image,DataManager.getInstance().getImageLoadedCallback(mDetail_image));
 
+                DataManager.getInstance().setCurrentCurrentImageURL(serverGalleryImageDomains.get(position).getImageUrl());
 
-              //  mDetail_image.setImageBitmap(DataManager.getInstance().getWebimage(serverImageDomains.get(position).getImageUrl()));
-            //    .placeholder(R.drawable.dx)
-          //              .resize(1420,580)
-
-
-                PhotoViewAttacher attacher = new PhotoViewAttacher(mDetail_image);
-                attacher.setScaleType(ImageView.ScaleType.FIT_XY);
-                  attacher.update();
-
-
-                mCategoryTextView.setText(serverImageDomains.get(position).getImageDate());
+                //해당 상세보기 이미지 날짜
+                mCategoryTextView.setText(serverGalleryImageDomains.get(position).getImageDate());
                 mCategoryTextView.invalidate();
             }
         });
 
-        mCategoryTextView.setText(serverImageDomains.get(position).getImageDate());
+        mCategoryTextView.setText(serverGalleryImageDomains.get(position).getImageDate());
         mCategoryTextView.invalidate();
 
         Picasso.with(context)
-                .load(serverImageDomains.get(position).getImageUrl())
+                .load(serverGalleryImageDomains.get(position).getImageUrl())
                 .placeholder(R.drawable.dx)
                 .resize(232,202)
                 .into(myViewHolder.mServer_imageview);
@@ -100,7 +91,7 @@ public class MyAlbumDetailRecyclerAdapter extends RecyclerView.Adapter{
     @Override
     public int getItemCount() {
 
-        return serverImageDomains.size();
+        return serverGalleryImageDomains.size();
     }
 
     /** This is our ViewHolder class */
@@ -117,7 +108,6 @@ public class MyAlbumDetailRecyclerAdapter extends RecyclerView.Adapter{
 
 
     }
-
 
 
 

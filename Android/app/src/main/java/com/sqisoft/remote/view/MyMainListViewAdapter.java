@@ -11,7 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sqisoft.remote.R;
-import com.sqisoft.remote.domain.SelfieZoneObject;
+import com.sqisoft.remote.domain.SelfieZoneDomain;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -25,12 +26,12 @@ public class MyMainListViewAdapter extends BaseAdapter{
     LayoutInflater inflater;
     int indexNum = 0;
     // 문자열을 보관 할 ArrayList
-    private ArrayList<SelfieZoneObject> String_List = new ArrayList<SelfieZoneObject>();
+    private ArrayList<SelfieZoneDomain> SelfieZoneDomains = new ArrayList<>();
 
     // 생성자
-    public MyMainListViewAdapter(Activity context, ArrayList<SelfieZoneObject> arrayList) {
+    public MyMainListViewAdapter(Activity context, ArrayList<SelfieZoneDomain> SelfieZoneDomains) {
         this.context = context;
-        this.String_List = arrayList;
+        this.SelfieZoneDomains = SelfieZoneDomains;
        // String_List = new ArrayList<String>();
         inflater = LayoutInflater.from(this.context);
 
@@ -38,12 +39,12 @@ public class MyMainListViewAdapter extends BaseAdapter{
 
     @Override
     public int getCount() {
-        return String_List.size();
+        return SelfieZoneDomains.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return String_List.get(position);
+        return SelfieZoneDomains.get(position);
     }
 
     @Override
@@ -65,16 +66,21 @@ public class MyMainListViewAdapter extends BaseAdapter{
             // TextView에 현재 position의 인덱스 추가
             TextView index = (TextView) convertView.findViewById(R.id.index);
              indexNum = position+1;
-            index.setText("셀카존 00"+indexNum);
+            index.setText(context.getResources().getString(R.string.selfieIndex)+SelfieZoneDomains.get(position).getIndex());
 
             TextView title = (TextView) convertView.findViewById(R.id.title_text);
-               title.setText(String_List.get(position).getmTitle());
+               title.setText(SelfieZoneDomains.get(position).getName());
 
             TextView desc = (TextView) convertView.findViewById(R.id.desc_text);
-               desc.setText(String_List.get(position).getmDesc());
+               desc.setText(SelfieZoneDomains.get(position).getZoneDesc());
 
-            ImageView imageView = (ImageView) convertView.findViewById(R.id.selfie_zone);
-               imageView.setImageBitmap(String_List.get(position).getmTourBitmap());
+              ImageView imageView = (ImageView) convertView.findViewById(R.id.selfie_zone);
+
+                 Picasso.with(context)
+                .load(SelfieZoneDomains.get(position).getZoneImageUrl())
+                .resize(400,400)
+                .placeholder(R.drawable.dx)
+                .into(imageView);
 
 
 /*            // 버튼을 터치 했을 때 이벤트 발생
@@ -93,7 +99,7 @@ public class MyMainListViewAdapter extends BaseAdapter{
                 @Override
                 public void onClick(View v) {
                     // 터치 시 해당 아이템 이름 출력
-                    Toast.makeText(context, "리스트 클릭 : "+String_List.get(pos).toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "리스트 클릭 : "+SelfieZoneDomains.get(pos).toString(), Toast.LENGTH_SHORT).show();
                 }
             });
 
